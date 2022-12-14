@@ -276,7 +276,10 @@ select_autotype_command() {
 }
 
 type_word() {
+  DEFAULT_LAYOUT="$(setxkbmap -query | grep layout | awk '{print $2}')"
+  setxkbmap us
   "${AUTOTYPE_MODE[@]}" type $CLEAR_MODIFIERS "$1"
+  setxkbmap ${DEFAULT_LAYOUT}
 }
 
 type_tab() {
