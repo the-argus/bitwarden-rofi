@@ -69,6 +69,7 @@ ask_password() {
 }
 
 get_session_key() {
+  keyctl link @u @s
   if [ $AUTO_LOCK -eq 0 ]; then
     keyctl purge user bw_session &>/dev/null
     BW_HASH=$(ask_password)
