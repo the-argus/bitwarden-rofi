@@ -52,8 +52,15 @@ DEDUP_MARK="(+)"
 DIR="$(dirname "$(readlink -f "$0")")"
 source "$DIR/lib-bwmenu"
 
+remove_cache() {
+  if [ -f $CACHE_FILE ]; then
+    shred $CACHE_FILE
+    rm $CACHE_FILE
+  fi
+}
+
 ask_password() {
-  rm $CACHE_FILE
+  remove_cache
   mpw=$(printf '' | rofi -dmenu -p "Master Password" -password -lines 0 ${ROFI_OPTIONS[@]} "${ROFI_PASSWORD_OPTIONS[@]}") || exit $?
   echo "$mpw" | bw unlock 2>/dev/null | grep 'export' | sed -E 's/.*export BW_SESSION="(.*==)"$/\1/' || exit_error $? "Could not unlock vault"
 }
@@ -209,7 +216,7 @@ show_folders() {
 sync_bitwarden() {
   bw sync --session "$BW_HASH" &>/dev/null || exit_error 1 "Failed to sync bitwarden"
 
-  rm $CACHE_FILE
+  remove_cache
   load_items
   show_items
 }
