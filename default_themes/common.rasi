@@ -6,3 +6,11 @@ configuration {
   sidebar-mode: 				    false;
   padding:	                        30% 40% 30% 40%;
 }
+
+* {
+  background:                     #00000060;
+  background-alt:                 #00000000;
+  background-bar:                 #f2f2f215;
+  foreground:                     #f2f2f2EE;
+  accent:                         #ffffff66;
+}

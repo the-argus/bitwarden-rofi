@@ -102,6 +102,7 @@ remove_cache() {
 
 ask_password() {
   remove_cache
+  # known issue: rofi will quietly fail (segfault?) if there are issues with the theme
   mpw=$(printf '' | rofi -theme $ASKPASS_THEME -dmenu -p "Master Password" -password -lines 0 ${ROFI_OPTIONS[@]} "${ROFI_PASSWORD_OPTIONS[@]}") || exit $?
   if ! out="$(bw --raw --nointeraction unlock "$mpw" 2>&1)"; then
     exit_error 1 "Could not unlock vault: $out"

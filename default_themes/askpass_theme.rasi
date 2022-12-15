@@ -1,1 +1,41 @@
 @import "common.rasi"
+
+
+prompt {
+  enabled: 						    true;
+  background-color: 		        @background;
+  text-color: 					    @foreground;
+  font:							    "monospace";
+}
+
+entry {
+  background-color:                 @background;
+  text-color:                       @foreground;
+  placeholder-color:                @foreground;
+  blink:                            true;
+}
+
+inputbar {
+  children: 						[ "prompt", "entry" ];
+  background-color:                 @background-bar;
+  text-color:                       @foreground;
+  border:							0.1%;
+  border-radius:                    6px;
+  border-color:					    @accent;
+}
+
+mainbox {
+  background-color:                 @background;
+  text-color:                       @foreground;
+  border:							0% 0% 0% 0%;
+  border-radius:                    0% 0% 0% 0%;
+  border-color:					    @accent;
+  spacing:                       	8%;
+  /* for some reason rofi segfaults if "listview" isnt a child in dmenu mode */
+  /* children:                         [ "inputbar" ]; */
+  padding:                          10% 8.5% 10% 8.5%;
+}
+
+window {
+  height:                           inherit;
+}
