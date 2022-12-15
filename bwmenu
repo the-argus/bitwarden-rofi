@@ -73,31 +73,40 @@ ask_password() {
 get_session_key_instalock () {
   # also remove it from the keyring if it already existed
   keyctl purge user bw_session &>/dev/null
-  BW_HASH=$(ask_password)
+  BW_HASH=$(ask_password) || exit $?
 }
 
 # get the session key, store it in the keyring, and set an expiration time
 # (alternative to get_session_key_instalock)
 get_session_key_set_pw_locktime () {
-  if ! key_id=$(keyctl request user bw_session 2>/dev/null); then
-    # key doesnt exist, ask password to open a session
-    session=$(ask_password) || exit $?
-    key_id=$(echo "$session" | keyctl padd user bw_session @u)
-  else
-    # key IS loaded, now purge it if the vault is locked
-    status=$(bw status | jq -r ".status")
-    if [ $status -eq "locked" ]; then
+  # ask for the password and add the resulting session hash to the keyring
+  key_id=
+  function ask_password_add_to_keyring () {
+    BW_HASH=$(ask_password) || exit $?
+    key_id=$(echo "$BW_HASH" | keyctl padd user bw_session @u)
+  }
+
+  # main logic: if we can get a session from the keyring, then use it unless
+  # bw is locked.
+  if key_id=$(keyctl request user bw_session 2>/dev/null); then
+    BW_HASH=$(keyctl pipe "$key_id")
+
+    # if we have the key but bw is locked, then reset everything
+    status=$(bw status --session $BW_HASH | jq -r ".status")
+    if [ "$status" = "locked" ]; then
       remove_cache
       keyctl purge user bw_session &>/dev/null
+      # to be safe, we should also run "bw lock" here, but its faster not to
+      ask_password_add_to_keyring
     fi
+  else
+    ask_password_add_to_keyring
   fi
   
-  # this allows the user to set their AUTO_LOCK to a negative number and have
-  # the session never expire
+  # set timeout of the key
   if [ $AUTO_LOCK -gt 0 ]; then
     keyctl timeout "$key_id" $AUTO_LOCK
   fi
-  BW_HASH=$(keyctl pipe "$key_id")
 }
 
 get_session_key() {
