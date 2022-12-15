@@ -77,6 +77,13 @@ get_session_key() {
     if ! key_id=$(keyctl request user bw_session 2>/dev/null); then
       session=$(ask_password) || exit $?
       key_id=$(echo "$session" | keyctl padd user bw_session @u)
+    else
+      # key IS loaded, now purge it if bw is locked
+      status=$(bw status | jq -r ".status")
+      if [ $status -eq "locked" ]; then
+        remove_cache
+        keyctl purge user bw_session &>/dev/null
+      fi
     fi
     
     if [ $AUTO_LOCK -gt 0 ]; then
