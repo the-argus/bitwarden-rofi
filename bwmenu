@@ -9,10 +9,14 @@ BW_HASH=
 CLEAR=$DEFAULT_CLEAR # Clear password after N seconds (0 to disable)
 SHOW_PASSWORD=no # Show part of the password in the notification
 AUTO_LOCK=900 # 15 minutes, default for bitwarden apps
+# time before bwmenu will verify that session is unlocked, causing slower
+# launch times as a result.
+HOT_LOOKUP_TIME=60 
 
 # Holds the available items in memory
 ITEMS=
 CACHE_FILE=/tmp/bwmenu/logins.gpg
+TIME_FILE=/tmp/bwmenu/time
 
 # Stores which command will be used to emulate keyboard type
 AUTOTYPE_MODE=
@@ -78,7 +82,7 @@ get_session_key_instalock () {
 
 # get the session key, store it in the keyring, and set an expiration time
 # (alternative to get_session_key_instalock)
-get_session_key_set_pw_locktime () {
+get_session_key_set_password_locktime () {
   # ask for the password and add the resulting session hash to the keyring
   key_id=
   function ask_password_add_to_keyring () {
@@ -114,7 +118,7 @@ get_session_key() {
   if [ $AUTO_LOCK -eq 0 ]; then
     get_session_key_instalock
   else
-    get_session_key_set_pw_locktime
+    get_session_key_set_password_locktime
   fi
 }
 
