@@ -16,7 +16,7 @@ HOT_LOOKUP_TIME=60
 # Holds the available items in memory
 ITEMS=
 CACHE_FILE=/tmp/bwmenu/logins.gpg
-TIME_FILE=/tmp/bwmenu/time
+TIME_FILE=/tmp/bwmenu/hot_lookup_time
 
 # Stores which command will be used to emulate keyboard type
 AUTOTYPE_MODE=
@@ -55,6 +55,25 @@ DEDUP_MARK="(+)"
 # Source helper functions
 DIR="$(dirname "$(readlink -f "$0")")"
 source "$DIR/lib-bwmenu"
+
+hot_lookup_time_passed () {
+  # just assume hot lookup is over if theres no file (it never started)
+  if [ ! -f $TIME_FILE ]; then
+    return 0
+  fi
+
+  # compare the unix times
+  old=$(cat $TIME_FILE)
+  new=$(date +%s)
+  difference=$(($new-$old))
+
+  # return with codes so this function can be used in if statements
+  if [ $difference -gt $HOT_LOOKUP_TIME ]; then
+    return 0
+  else
+    return 1
+  fi
+}
 
 remove_cache() {
   if [ -f $CACHE_FILE ]; then
@@ -96,7 +115,12 @@ get_session_key_set_password_locktime () {
     BW_HASH=$(keyctl pipe "$key_id")
 
     # if we have the key but bw is locked, then reset everything
-    status=$(bw status --session $BW_HASH | jq -r ".status")
+    # (using hot lookup time to cancel this process during successive calls)
+    status="unlocked"
+    if hot_lookup_time_passed; then
+      status=$(bw status --session $BW_HASH | jq -r ".status")
+      date +%s > $TIME_FILE # record current time to the time file
+    fi
     if [ "$status" = "locked" ]; then
       remove_cache
       keyctl purge user bw_session &>/dev/null
