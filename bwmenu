@@ -56,22 +56,22 @@ DEDUP_MARK="(+)"
 DIR="$(dirname "$(readlink -f "$0")")"
 source "$DIR/lib-bwmenu"
 
-CONFIG_DIRECTORY=$HOME/.config/bwmenu
-if [ ! -d $CONFIG_DIRECTORY ]; then
-  CONFIG_DIRECTORY=$DIR/default_themes
+THEMES_DIRECTORY=$HOME/.config/bwmenu/themes
+if [ ! -d $THEMES_DIRECTORY ]; then
+  THEMES_DIRECTORY=$DIR/default_themes
 fi
 
 ASKPASS_THEME=
-if [ -f $CONFIG_DIRECTORY/askpass_theme.rasi ]; then
-  ASKPASS_THEME=$CONFIG_DIRECTORY/askpass_theme.rasi
-else
+if [ -f $THEMES_DIRECTORY/askpass_theme.rasi ]; then
+  ASKPASS_THEME=$THEMES_DIRECTORY/askpass_theme.rasi
+fi
 MAIN_THEME=
-if [ -f $CONFIG_DIRECTORY/main_theme.rasi ]; then
-  MAIN_THEME=$CONFIG_DIRECTORY/main_theme.rasi
+if [ -f $THEMES_DIRECTORY/main_theme.rasi ]; then
+  MAIN_THEME=$THEMES_DIRECTORY/main_theme.rasi
 fi
 ERROR_THEME=
-if [ -f $CONFIG_DIRECTORY/error_theme.rasi ]; then
-  ERROR_THEME=$CONFIG_DIRECTORY/error_theme.rasi
+if [ -f $THEMES_DIRECTORY/error_theme.rasi ]; then
+  ERROR_THEME=$THEMES_DIRECTORY/error_theme.rasi
 fi
 
 hot_lookup_time_passed () {

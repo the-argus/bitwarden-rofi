@@ -8,7 +8,6 @@
   gnupg,
   coreutils-full,
   buildPackages,
-  fetchgit,
   lib,
   ...
 }: let
@@ -28,9 +27,13 @@ in
     installPhase = ''
       mkdir -p $out/bin
       mkdir -p $out/lib
-      substitute bwmenu $out/bin/bwmenu --replace "source \"\$DIR/lib-bwmenu\"" "source \"$out/lib/lib-bwmenu\""
+      mkdir -p $out/share/bwmenu
+      substitute bwmenu $out/bin/bwmenu \
+        --replace "source \"\$DIR/lib-bwmenu\"" "source \"$out/lib/lib-bwmenu\"" \
+        --replace "THEMES_DIRECTORY=\$DIR/default_themes" "THEMES_DIRECTORY=$out/share/bwmenu/themes"
       ${coreutils-full}/bin/chmod +x $out/bin/bwmenu
       cp lib-bwmenu $out/lib
+      cp -r default_themes $out/share/bwmenu/themes
 
       wrapProgram "$out/bin/bwmenu" \
           --prefix PATH : ${runtimePath}
