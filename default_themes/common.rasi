@@ -1,0 +1,8 @@
+configuration {
+  font:			                    "monospace";
+  display-drun: 					"";
+  drun-display-format:              "{name}";
+  disable-history:                  false;
+  sidebar-mode: 				    false;
+  padding:	                        30% 40% 30% 40%;
+}

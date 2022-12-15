@@ -56,6 +56,24 @@ DEDUP_MARK="(+)"
 DIR="$(dirname "$(readlink -f "$0")")"
 source "$DIR/lib-bwmenu"
 
+CONFIG_DIRECTORY=$HOME/.config/bwmenu
+if [ ! -d $CONFIG_DIRECTORY ]; then
+  CONFIG_DIRECTORY=$DIR/default_themes
+fi
+
+ASKPASS_THEME=
+if [ -f $CONFIG_DIRECTORY/askpass_theme.rasi ]; then
+  ASKPASS_THEME=$CONFIG_DIRECTORY/askpass_theme.rasi
+else
+MAIN_THEME=
+if [ -f $CONFIG_DIRECTORY/main_theme.rasi ]; then
+  MAIN_THEME=$CONFIG_DIRECTORY/main_theme.rasi
+fi
+ERROR_THEME=
+if [ -f $CONFIG_DIRECTORY/error_theme.rasi ]; then
+  ERROR_THEME=$CONFIG_DIRECTORY/error_theme.rasi
+fi
+
 hot_lookup_time_passed () {
   # just assume hot lookup is over if theres no file (it never started)
   if [ ! -f $TIME_FILE ]; then
@@ -84,7 +102,7 @@ remove_cache() {
 
 ask_password() {
   remove_cache
-  mpw=$(printf '' | rofi -dmenu -p "Master Password" -password -lines 0 ${ROFI_OPTIONS[@]} "${ROFI_PASSWORD_OPTIONS[@]}") || exit $?
+  mpw=$(printf '' | rofi -theme $ASKPASS_THEME -dmenu -p "Master Password" -password -lines 0 ${ROFI_OPTIONS[@]} "${ROFI_PASSWORD_OPTIONS[@]}") || exit $?
   if ! out="$(bw --raw --nointeraction unlock "$mpw" 2>&1)"; then
     exit_error 1 "Could not unlock vault: $out"
   fi
@@ -172,7 +190,7 @@ exit_error() {
   local code="$1"
   local message="$2"
 
-  rofi -e "$message" ${ROFI_OPTIONS[@]}
+  rofi -theme $ERROR_THEME -e "$message" ${ROFI_OPTIONS[@]}
   exit "$code"
 }
 
@@ -202,6 +220,7 @@ rofi_menu() {
   }
 
   rofi -dmenu -p 'Name' \
+    -theme $MAIN_THEME \
     -i -no-custom \
     -mesg "$msg" \
     "${actions[@]}" \
