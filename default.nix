@@ -11,7 +11,7 @@
   lib,
   ...
 }: let
-  runtimePath = lib.strings.makeBinPath [
+  deps = [
     jq
     bitwarden-cli
     git-rofi
@@ -19,6 +19,7 @@
     keyutils
     gnupg
   ];
+  runtimePath = lib.strings.makeBinPath deps;
 in
   stdenv.mkDerivation rec {
     name = "bw-rofi";
@@ -38,5 +39,5 @@ in
       wrapProgram "$out/bin/bwmenu" \
           --prefix PATH : ${runtimePath}
     '';
-    nativeBuildInputs = [buildPackages.makeWrapper];
+    nativeBuildInputs = [buildPackages.makeWrapper] ++ deps;
   }
