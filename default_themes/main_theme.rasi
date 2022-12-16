@@ -1,1 +1,36 @@
 @import "common.rasi"
+
+configuration {
+    font:						    "monospace 16";
+}
+
+promptbox {
+    children:                       ["icon", "prompt", "entry"];
+    orientation:                    horizontal;
+    border-radius:                  6px;
+    padding: 8px;
+    expand: false;
+    margin: 2px;
+}
+
+mainbox {
+    children:                       ["promptbox", "listview"];
+}
+
+listview {
+    background-color:               @tertiary-color-1;
+    columns: 2;
+    lines: 5;
+}
+
+element-text {
+    background-color:               @tertiary-color-2;
+    text-color:                     @tertiary-color-3;
+    padding: 6px;
+}
+
+element {
+    margin: 2px 2px 0px 2px;
+    border-radius: 6px;
+    expand: false;
+}

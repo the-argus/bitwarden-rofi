@@ -1,7 +1,5 @@
 configuration {
-    font:						    "sans-serif Bold 16";
-    display-drun: 					"";
-    drun-display-format:            "{name}";
+    font:						    "monospace Bold 16";
     disable-history:                false;
     sidebar-mode: 				    false;
     padding:	                    30% 40% 30% 40%;
@@ -9,7 +7,7 @@ configuration {
 
 * {
     bw-highlight:                   #175ddcFF;
-    black:                          #00000000;
+    black:                          #000000ff;
     white:                          #ffffffff;
     /* taken from the "business sales" button on bitwarden website */
     bw-highlight-dark:              rgb(26, 59, 102);
@@ -19,4 +17,29 @@ configuration {
     tertiary-color-1:               @bw-highlight;
     tertiary-color-1-alt:           @bw-highlight-dark;
     tertiary-color-3:               @black;
+}
+
+mainbox {
+    background-color:               @tertiary-color-1;
+    text-color:                     @tertiary-color-2;
+    /* border-radius:               0.375rem; */
+    /* rem doesnt work so assuming one REM is 16px: */
+    /* this matches bitwarden.com buttons */
+    border-radius:                  6px;
+    padding:                        8px;
+}
+
+icon {
+    padding: 6px;
+    expand: false;
+    background-image: url("icon/bitwarden.png", height);
+    background-color: @tertiary-color-2;
+}
+
+entry {
+    cursor: text;
+}
+
+listview, element-text {
+    cursor: pointer;
 }
