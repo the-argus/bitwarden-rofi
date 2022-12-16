@@ -7,7 +7,7 @@ password you are copying at that time.
 
 ## WARNING
 
-Rofi is _not_ a secure software meant for secure password handling. The password
+Rofi is _not_ meant for secure password handling. The password
 entered into rofi in plaintext and exists in memory in that format in the stack
 until it is piped into the bitwarden cli. Use at your own risk.
 
