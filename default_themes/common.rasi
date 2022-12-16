@@ -7,6 +7,7 @@ configuration {
 
 * {
     bw-highlight:                   #175ddcFF;
+    /* bw-highlight:                   #577CF0FF; */
     black:                          #000000ff;
     white:                          #ffffffff;
     /* taken from the "business sales" button on bitwarden website */

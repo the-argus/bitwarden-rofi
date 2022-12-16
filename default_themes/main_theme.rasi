@@ -4,10 +4,15 @@ configuration {
     font:						    "monospace 16";
 }
 
+icon {
+    border-radius: 6px;
+    border: 2px;
+    border-color: @tertiary-color-2;
+    background-image: url("icon/bitwarden-border.png", height);
+}
+
 messagepromptbox {
     children:                       ["promptbox", "message"];
-    background-color:               @tertiary-color-1-alt;
-    text-color:                     @tertiary-color-2;
     border-radius: 6px;
     expand: false;
 }
@@ -20,14 +25,18 @@ promptbox {
     margin: 2px;
 }
 
-icon, listview, prompt, promptbox, entry, message, textbox, element, element-text {
+entry {
+    padding: 0px 0px 0px 8px;
+}
+
+icon, listview, prompt, promptbox, entry, message, textbox, element, element-text, messagepromptbox {
     background-color: inherit;
     text-color: inherit;
 }
 
 mainbox {
     children:                       ["messagepromptbox", "listview"];
-    background-color:               @tertiary-color-1-alt;
+    background-color:               @tertiary-color-1;
     text-color:                     @tertiary-color-2;
 }
 
@@ -43,7 +52,8 @@ textbox {
 
 listview {
     margin: 2px 0px 0px 0px;
-    background-color:               @tertiary-color-1;
+    background-color:               @tertiary-color-2;
+    text-color:                     @tertiary-color-1;
     columns: 2;
     lines: 5;
     border-radius: 6px;
