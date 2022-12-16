@@ -4,8 +4,8 @@ promptbox {
     children:                       ["icon", "prompt"];
     orientation:                    horizontal;
     border-radius:                  6px;
-    padding: 8px;
-    expand: false;
+    padding:                        8px;
+    expand:                         false;
 }
 
 prompt {
@@ -25,8 +25,8 @@ entry {
 inputbar {
     children: 				        [ "entry" ];
     border-radius:                  6px;
-    expand: true;
-    margin: 0% 0% 0% 2px;
+    expand:                         true;
+    margin:                         0% 0% 0% 2px;
 }
 
 listview {

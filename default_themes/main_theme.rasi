@@ -5,33 +5,33 @@ configuration {
 }
 
 icon {
-    border-radius: 6px;
-    border: 2px;
-    border-color: @tertiary-color-2;
-    background-image: url("icon/bitwarden-border.png", height);
+    border-radius:                  6px;
+    border:                         2px;
+    border-color:                   @tertiary-color-2;
+    background-image:               url("icon/bitwarden-border.png", height);
 }
 
 messagepromptbox {
     children:                       ["promptbox", "message"];
-    border-radius: 6px;
-    expand: false;
+    border-radius:                  6px;
+    expand:                         false;
 }
 
 promptbox {
     children:                       ["icon", "prompt", "entry"];
     orientation:                    horizontal;
-    padding: 8px;
-    expand: false;
-    margin: 2px;
+    padding:                        8px;
+    expand:                         false;
+    margin:                         2px;
 }
 
 entry {
-    padding: 0px 0px 0px 8px;
+    padding:                        0px 0px 0px 8px;
 }
 
 icon, listview, prompt, promptbox, entry, message, textbox, element, element-text, messagepromptbox {
-    background-color: inherit;
-    text-color: inherit;
+    background-color:               inherit;
+    text-color:                     inherit;
 }
 
 mainbox {
@@ -41,23 +41,23 @@ mainbox {
 }
 
 message {
-    margin: 0px 2px 2px 2px;
-    children: ["textbox"];
+    margin:                         0px 2px 2px 2px;
+    children:                       ["textbox"];
 }
 
 textbox {
-    padding: 0px 8px 8px 8px;
-    font: "monospace 13";
+    padding:                        0px 8px 8px 8px;
+    font:                           "monospace 13";
 }
 
 listview {
-    margin: 2px 0px 0px 0px;
+    margin:                         2px 0px 0px 0px;
     background-color:               @tertiary-color-2;
     text-color:                     @tertiary-color-1;
-    columns: 2;
-    lines: 5;
-    border-radius: 6px;
-    expand: true;
+    columns:                        2;
+    lines:                          5;
+    border-radius:                  6px;
+    expand:                         true;
 }
 
 element-text {
