@@ -4,28 +4,53 @@ configuration {
     font:						    "monospace 16";
 }
 
+messagepromptbox {
+    children:                       ["promptbox", "message"];
+    background-color:               @tertiary-color-1-alt;
+    text-color:                     @tertiary-color-2;
+    border-radius: 6px;
+    expand: false;
+}
+
 promptbox {
     children:                       ["icon", "prompt", "entry"];
     orientation:                    horizontal;
-    border-radius:                  6px;
     padding: 8px;
     expand: false;
     margin: 2px;
 }
 
+icon, listview, prompt, promptbox, entry, message, textbox, element, element-text {
+    background-color: inherit;
+    text-color: inherit;
+}
+
 mainbox {
-    children:                       ["promptbox", "listview"];
+    children:                       ["messagepromptbox", "listview"];
+    background-color:               @tertiary-color-1-alt;
+    text-color:                     @tertiary-color-2;
+}
+
+message {
+    margin: 0px 2px 2px 2px;
+    children: ["textbox"];
+}
+
+textbox {
+    padding: 0px 8px 8px 8px;
+    font: "monospace 13";
 }
 
 listview {
+    margin: 2px 0px 0px 0px;
     background-color:               @tertiary-color-1;
     columns: 2;
     lines: 5;
+    border-radius: 6px;
+    expand: true;
 }
 
 element-text {
-    background-color:               @tertiary-color-2;
-    text-color:                     @tertiary-color-3;
     padding: 6px;
 }
 

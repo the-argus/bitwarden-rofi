@@ -12,7 +12,6 @@ prompt {
     enabled: 					    true;
     background-color: 		        @tertiary-color-2;
     text-color: 				    @tertiary-color-1;
-    vertical-align: 0.5;
 }
 
 entry {
@@ -20,7 +19,6 @@ entry {
     text-color:                     @tertiary-color-1;
     placeholder-color:              @tertiary-color-1-alt;
     blink:                          true;
-    vertical-align: 0.5;
     padding: 0% 0% 0% 8px;
 }
 

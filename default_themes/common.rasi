@@ -36,6 +36,14 @@ icon {
     background-color: @tertiary-color-2;
 }
 
+prompt {
+    vertical-align: 0.5;
+}
+
+entry {
+    vertical-align: 0.5;
+}
+
 entry {
     cursor: text;
 }
