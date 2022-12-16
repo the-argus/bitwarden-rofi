@@ -219,7 +219,7 @@ rofi_menu() {
 <b>$KB_TYPEALL</b>: Type all  | <b>$KB_TYPEUSER</b>: Type user | <b>$KB_TYPEPASS</b>: Type pass"
   }
 
-  rofi -dmenu -p 'Name' \
+  rofi -dmenu -p '' \
     -theme $MAIN_THEME \
     -i -no-custom \
     -mesg "$msg" \
