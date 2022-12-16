@@ -24,6 +24,8 @@ inputbar {
   border-color:					    @accent;
 }
 
+listview { enabled: false; }
+
 mainbox {
   background-color:                 @background;
   text-color:                       @foreground;
@@ -31,8 +33,6 @@ mainbox {
   border-radius:                    0% 0% 0% 0%;
   border-color:					    @accent;
   spacing:                       	8%;
-  /* for some reason rofi segfaults if "listview" isnt a child in dmenu mode */
-  /* children:                         [ "inputbar" ]; */
   padding:                          10% 8.5% 10% 8.5%;
 }
 
