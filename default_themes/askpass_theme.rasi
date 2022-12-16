@@ -1,43 +1,69 @@
 @import "common.rasi"
 
+promptbox {
+    children:                       ["icon", "prompt"];
+    orientation:                    horizontal;
+    border-radius:                  6px;
+    padding: 8px;
+}
+
+icon {
+    padding: 16px;
+    expand: false;
+    background-image: url("icon/bitwarden.png", height);
+    background-color: @tertiary-color-2;
+}
 
 prompt {
-  enabled: 						    true;
-  background-color: 		        @background;
-  text-color: 					    @foreground;
-  font:							    "monospace";
+    enabled: 					    true;
+    background-color: 		        @tertiary-color-2;
+    text-color: 				    @tertiary-color-1;
+    vertical-align: 0.5;
 }
 
 entry {
-  background-color:                 @background;
-  text-color:                       @foreground;
-  placeholder-color:                @foreground;
-  blink:                            true;
+    background-color:               @tertiary-color-2;
+    text-color:                     @tertiary-color-1;
+    placeholder-color:              @tertiary-color-1-alt;
+    blink:                          true;
+    vertical-align: 0.5;
 }
 
 inputbar {
-  children: 						[ "prompt", "entry" ];
-  background-color:                 @background-bar;
-  text-color:                       @foreground;
-  border:							0.1%;
-  border-radius:                    6px;
-  border-color:					    @accent;
+    children: 				        [ "entry" ];
+    /* background-color:            @background-bar; */
+    /* text-color:                  @foreground; */
+    border:					        0.1%;
+    border-radius:                  6px;
+    expand: true;
+    /* border-color:			    @accent; */
 }
 
 listview {
-  enabled: false;
+    enabled: false;
 }
 
 mainbox {
-  background-color:                 @background;
-  text-color:                       @foreground;
-  border:							0% 0% 0% 0%;
-  border-radius:                    0% 0% 0% 0%;
-  border-color:					    @accent;
-  spacing:                       	8%;
-  padding:                          10% 8.5% 10% 8.5%;
+    background-color:               @tertiary-color-1;
+    text-color:                     @tertiary-color-2;
+    /* border-radius:               0.375rem; */
+    /* rem doesnt work so assuming one REM is 16px: */
+    /* this matches bitwarden.com buttons */
+    children:                       ["promptbox", "inputbar", "listview"];
+    orientation:                    horizontal;
+    border-radius:                  6px;
+    border-color:				    @tertiary-color-2;
+    padding:                        8px;
 }
 
 window {
-  height:                           inherit;
+    height:                         inherit;
+}
+
+listview, element, element-selected, element-text {
+    cursor: pointer;
+}
+
+entry {
+    cursor: text;
 }

@@ -1,16 +1,22 @@
 configuration {
-  font:			                    "monospace";
-  display-drun: 					"";
-  drun-display-format:              "{name}";
-  disable-history:                  false;
-  sidebar-mode: 				    false;
-  padding:	                        30% 40% 30% 40%;
+    font:						    "sans-serif Bold 16";
+    display-drun: 					"";
+    drun-display-format:            "{name}";
+    disable-history:                false;
+    sidebar-mode: 				    false;
+    padding:	                    30% 40% 30% 40%;
 }
 
 * {
-  background:                     #00000060;
-  background-alt:                 #00000000;
-  background-bar:                 #f2f2f215;
-  foreground:                     #f2f2f2EE;
-  accent:                         #ffffff66;
+    bw-highlight:                   #175ddcFF;
+    black:                          #00000000;
+    white:                          #ffffffff;
+    /* taken from the "business sales" button on bitwarden website */
+    bw-highlight-dark:              rgb(26, 59, 102);
+    
+    /* aliases */
+    tertiary-color-2:               @white;
+    tertiary-color-1:               @bw-highlight;
+    tertiary-color-1-alt:           @bw-highlight-dark;
+    tertiary-color-3:               @black;
 }
