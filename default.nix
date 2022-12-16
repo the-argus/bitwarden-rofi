@@ -3,7 +3,7 @@
   keyutils,
   jq,
   bitwarden-cli,
-  rofi,
+  git-rofi,
   xclip,
   gnupg,
   coreutils-full,
@@ -14,7 +14,7 @@
   runtimePath = lib.strings.makeBinPath [
     jq
     bitwarden-cli
-    rofi
+    git-rofi
     xclip
     keyutils
     gnupg
