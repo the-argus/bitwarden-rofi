@@ -1,9 +1,15 @@
 # Bitwarden Rofi Menu
 
-This is a work in progress to get the BitWarden cli functionality in an easy Rofi menu.
-On selecting an entry, the password is copied to your clipboard for 5 seconds.
-During those 5 seconds, a notification is shown indicating which password you
-are copying at that time.
+This is a work in progress to get the BitWarden cli functionality in an easy
+Rofi menu. On selecting an entry, the password is copied to your clipboard for
+5 seconds. During those 5 seconds, a notification is shown indicating which
+password you are copying at that time.
+
+## WARNING
+
+Rofi is _not_ a secure software meant for secure password handling. The password
+entered into rofi in plaintext and exists in memory in that format in the stack
+until it is piped into the bitwarden cli. Use at your own risk.
 
 ![bitwarden-rofi](img/screenshot1.png)
 
@@ -12,7 +18,7 @@ are copying at that time.
 You can either execute the script from a terminal or by binding it to a key
 combination in your window manager.
 
-```
+```txt
 bwmenu 0.4
 
 Usage:
@@ -43,7 +49,8 @@ Options:
       Show the first 4 characters of the copied password in the notification.
 
   -p, --password-rofi-option
-      Option pass to rofi '-theme-str' when asking for master password (Can be called multiple times).
+      Option pass to rofi '-theme-str' when asking for master password
+      (Can be called multiple times).
 
 Quick Actions:
   When hovering over an item in the rofi menu, you can make use of Quick Actions.
@@ -72,29 +79,36 @@ Examples:
   bwmenu --auto-lock -1
 
   # Only show rofi inputbar when asking for master password
-  bwmenu -p "mainbox{children: [inputbar];}" -p " inputbar{spacing: 20px;children: [prompt,entry];}" -p window{height:inherit\;}
+  bwmenu -p "mainbox{children: [inputbar];}" \
+    -p " inputbar{spacing: 20px;children: [prompt,entry];}" \
+    -p window{height:inherit\;}
 
   # Place rofi on top of screen, like a Quake console
   bwmenu -- -location 2
 ```
 
-
 ### Functions
 
-  - <kbd>Alt</kbd>+<kbd>r</kbd>: Resync Bitwarden
-  - <kbd>Alt</kbd>+<kbd>u</kbd>: Search on url
-  - <kbd>Alt</kbd>+<kbd>n</kbd>: Search on names
-  - <kbd>Alt</kbd>+<kbd>c</kbd>: Select folder to search in
-  - <kbd>Alt</kbd>+<kbd>t</kbd>: Copy the TOTP
-  - <kbd>Alt</kbd>+<kbd>L</kbd>: Lock and exit
+- <kbd>Alt</kbd>+<kbd>r</kbd>: Resync Bitwarden
+- <kbd>Alt</kbd>+<kbd>u</kbd>: Search on url
+- <kbd>Alt</kbd>+<kbd>n</kbd>: Search on names
+- <kbd>Alt</kbd>+<kbd>c</kbd>: Select folder to search in
+- <kbd>Alt</kbd>+<kbd>t</kbd>: Copy the TOTP
+- <kbd>Alt</kbd>+<kbd>L</kbd>: Lock and exit
 
 ### Auto Typing
-You can use bitwarden-rofi to auto type your *username*, *password* or *both* by using xdotool/ydotool to autofill forms.
-  - <kbd>Alt</kbd>+<kbd>1</kbd>: Type username and password
-  - <kbd>Alt</kbd>+<kbd>2</kbd>: Type only the username
-  - <kbd>Alt</kbd>+<kbd>3</kbd>: Type only the password
- 
-> __Wayland Users__: For autotyping to work in Wayland, you will need [`ydotool`](https://github.com/ReimuNotMoe/ydotool) working with root permissions (it needs access to /dev/uinput) without asking for password. For example, this can be achieved by adding this line in `visudo`:
+
+You can use bitwarden-rofi to auto type your *username*, *password* or *both* by
+using xdotool/ydotool to autofill forms.
+
+- <kbd>Alt</kbd>+<kbd>1</kbd>: Type username and password
+- <kbd>Alt</kbd>+<kbd>2</kbd>: Type only the username
+- <kbd>Alt</kbd>+<kbd>3</kbd>: Type only the password
+
+> __Wayland Users__: For autotyping to work in Wayland, you will need
+[`ydotool`](https://github.com/ReimuNotMoe/ydotool) working with root
+permissions (it needs access to /dev/uinput) without asking for password. For
+example, this can be achieved by adding this line in `visudo`:
 
 `your_username ALL=(ALL) NOPASSWD: /usr/bin/ydotool`
 
@@ -103,27 +117,32 @@ You can use bitwarden-rofi to auto type your *username*, *password* or *both* by
 ### Via package managers
 
 <a href="https://repology.org/metapackage/bitwarden-rofi/versions">
-  <img src="https://repology.org/badge/vertical-allrepos/bitwarden-rofi.svg" alt="Packaging status" align="right">
+  <img src="https://repology.org/badge/vertical-allrepos/bitwarden-rofi.svg"
+    alt="Packaging status" align="right">
 </a>
 
 #### Arch Linux (AUR)
 
-Install the `bitwarden-rofi` AUR package for the latest release or the `bitwarden-rofi-git` for the current master.  
+Install the `bitwarden-rofi` AUR package for the latest release or the
+`bitwarden-rofi-git` for the current master.  
 For copying or autotyping, install:
-- *xorg*: `xclip`,`xsel` and/or `xdotool` 
+
+- *xorg*: `xclip`,`xsel` and/or `xdotool`
 - *wayland*: `wl-clipboard` and `ydotool`
 
 ### Via source
 
-Install these **required** dependencies:
+Install these __required__ dependencies:
 
 - rofi
 - bitwarden-cli
 - jq
 
-> __Gentoo Users__: It appears Gentoo does not provide a kernel with `keyctl`. If so, make sure to install this as well
+> __Gentoo Users__: It appears Gentoo does not provide a kernel with `keyctl`.
+If so, make sure to install this as well
 
-**Optionally** install these requirements:
+__Optionally__ install these requirements:
+
 - xclip, xsel, or wl-clipboard
 - xdotool or ydotool
 
@@ -139,20 +158,3 @@ mkdir -p ~/.local/bin && \
   cp bwmenu ~/.local/bin/bwmenu && \
   chmod +x ~/.local/bin/bwmenu
 ```
-
-## Hall of Fame
-[![](https://sourcerer.io/fame/mattydebie/mattydebie/bitwarden-rofi/images/0)](https://sourcerer.io/fame/mattydebie/mattydebie/bitwarden-rofi/links/0)[![](https://sourcerer.io/fame/mattydebie/mattydebie/bitwarden-rofi/images/1)](https://sourcerer.io/fame/mattydebie/mattydebie/bitwarden-rofi/links/1)[![](https://sourcerer.io/fame/mattydebie/mattydebie/bitwarden-rofi/images/2)](https://sourcerer.io/fame/mattydebie/mattydebie/bitwarden-rofi/links/2)[![](https://sourcerer.io/fame/mattydebie/mattydebie/bitwarden-rofi/images/3)](https://sourcerer.io/fame/mattydebie/mattydebie/bitwarden-rofi/links/3)[![](https://sourcerer.io/fame/mattydebie/mattydebie/bitwarden-rofi/images/4)](https://sourcerer.io/fame/mattydebie/mattydebie/bitwarden-rofi/links/4)[![](https://sourcerer.io/fame/mattydebie/mattydebie/bitwarden-rofi/images/5)](https://sourcerer.io/fame/mattydebie/mattydebie/bitwarden-rofi/links/5)[![](https://sourcerer.io/fame/mattydebie/mattydebie/bitwarden-rofi/images/6)](https://sourcerer.io/fame/mattydebie/mattydebie/bitwarden-rofi/links/6)[![](https://sourcerer.io/fame/mattydebie/mattydebie/bitwarden-rofi/images/7)](https://sourcerer.io/fame/mattydebie/mattydebie/bitwarden-rofi/links/7)
-
-## License
-
-Released under the GNU General Public License, version 3. See `LICENSE` file.
-
-Copyright © 2018-2019
-  * Andreas Backx
-  * Daniel Prado
-  * Jonathan Raphaelson.
-  * Magnus Bergmark
-  * Matthias De Bie
-  * Remy Rojas
-  * Baptiste Pierrat
-  * Nathan Wallace
