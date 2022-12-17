@@ -66,7 +66,7 @@ Quick Actions:
   Alt+1  Autotype the username and password [needs xdotool (Xorg) / ydotool (Wayland)]
   Alt+2  Autotype the username [needs xdotool (Xorg) / ydotool (Wayland)]
   Alt+3  Autotype the password [needs xdotool (Xorg) / ydotool (Wayland)]
-  
+
   Alt+L  Lock your vault
 
 Examples:
@@ -99,63 +99,58 @@ Examples:
 
 ### Auto Typing
 
-You can use bitwarden-rofi to auto type your *username*, *password* or *both* by
+You can use bitwarden-rofi to auto type your _username_, _password_ or _both_ by
 using xdotool/ydotool to autofill forms.
 
 - <kbd>Alt</kbd>+<kbd>1</kbd>: Type username and password
 - <kbd>Alt</kbd>+<kbd>2</kbd>: Type only the username
 - <kbd>Alt</kbd>+<kbd>3</kbd>: Type only the password
 
-> __Wayland Users__: For autotyping to work in Wayland, you will need
-[`ydotool`](https://github.com/ReimuNotMoe/ydotool) working with root
-permissions (it needs access to /dev/uinput) without asking for password. For
-example, this can be achieved by adding this line in `visudo`:
+> **Wayland Users**: For autotyping to work in Wayland, you will need
+> [`ydotool`](https://github.com/ReimuNotMoe/ydotool) working with root
+> permissions (it needs access to /dev/uinput) without asking for password. For
+> example, this can be achieved by adding this line in `visudo`:
 
 `your_username ALL=(ALL) NOPASSWD: /usr/bin/ydotool`
 
 ## Install
 
-### Via package managers
+### With home-manager/nix
 
-<a href="https://repology.org/metapackage/bitwarden-rofi/versions">
-  <img src="https://repology.org/badge/vertical-allrepos/bitwarden-rofi.svg"
-    alt="Packaging status" align="right">
-</a>
+Add this flake to your flake inputs:
 
-#### Arch Linux (AUR)
+```nix
+{
+    inputs.bitwarden-rofi.url = github:the-argus/bitwarden-rofi;
+}
+```
 
-Install the `bitwarden-rofi` AUR package for the latest release or the
-`bitwarden-rofi-git` for the current master.  
-For copying or autotyping, install:
+Here's one installation example: a home-manager module.
 
-- *xorg*: `xclip`,`xsel` and/or `xdotool`
-- *wayland*: `wl-clipboard` and `ydotool`
+```nix
+{pkgs, bitwarden-rofi, ...}:
+{
+    home.packages = [
+        bitwarden-rofi.packages.${pkgs.system}.default
+    ];
+}
+```
 
 ### Via source
 
-Install these __required__ dependencies:
+Install these **required** dependencies:
 
 - rofi
 - bitwarden-cli
 - jq
+- gnupg
 
-> __Gentoo Users__: It appears Gentoo does not provide a kernel with `keyctl`.
-If so, make sure to install this as well
+Additionally, type `keyctl` into your terminal. If the command is not found,
+that means the kernel keyring utilities are not installed on your system. Find
+the package the provides this command and installed it- it's usually called
+keyutils.
 
-__Optionally__ install these requirements:
+**Optionally** install these requirements:
 
 - xclip, xsel, or wl-clipboard
 - xdotool or ydotool
-
-Then download the script file and place it somewhere on your `$PATH` and grant it
-the `+x` permission.
-
-```bash
-# Install for all users
-sudo install -D --mode=755 --group=root --owner=root bwmenu /usr/local/bin/bwmenu
-
-# Install for yourself
-mkdir -p ~/.local/bin && \
-  cp bwmenu ~/.local/bin/bwmenu && \
-  chmod +x ~/.local/bin/bwmenu
-```
