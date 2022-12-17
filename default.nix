@@ -9,6 +9,7 @@
   coreutils-full,
   buildPackages,
   lib,
+  xdotool,
   ...
 }: let
   deps = [
@@ -18,6 +19,7 @@
     xclip
     keyutils
     gnupg
+    xdotool
   ];
   runtimePath = lib.strings.makeBinPath deps;
 in
@@ -30,12 +32,13 @@ in
       mkdir -p $out/share/bwmenu
       substitute bwmenu $out/bin/bwmenu \
         --replace "source \"\$DIR/lib-bwmenu\"" "source \"$out/share/bwmenu/lib\"" \
-        --replace "THEMES_DIRECTORY=\$DIR/default_themes" "THEMES_DIRECTORY=$out/share/bwmenu/themes"
+        --replace "THEMES_DIRECTORY=\$DIR/default_themes" "THEMES_DIRECTORY=$out/share/bwmenu/themes" \
+        --replace "AUTOTYPE_MODE=\"UNSET\"" "AUTOTYPE_MODE=\"xdotool\""
       ${coreutils-full}/bin/chmod +x $out/bin/bwmenu
       cp lib-bwmenu $out/share/bwmenu/lib
       cp -r default_themes $out/share/bwmenu/themes
       cp -r icon $out/share/bwmenu/themes/icon
-      
+
       substitute default_themes/common.rasi $out/share/bwmenu/themes/common.rasi \
         --replace "icon {background-image: url(\"~/.config/bwmenu/icon/bitwarden.png\", height);}" \
         "icon {background-image: url(\"$out/share/bwmenu/themes/icon/bitwarden.png\", height);}"

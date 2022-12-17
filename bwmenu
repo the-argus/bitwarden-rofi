@@ -19,7 +19,7 @@ CACHE_FILE=/tmp/bwmenu/logins.gpg
 TIME_FILE=/tmp/bwmenu/hot_lookup_time
 
 # Stores which command will be used to emulate keyboard type
-AUTOTYPE_MODE=
+AUTOTYPE_MODE="UNSET"
 # Stores the argument need by xdotool to clear the modifiers (shift, control, alt, ...) first
 CLEAR_MODIFIERS=
 
@@ -212,7 +212,7 @@ rofi_menu() {
 
   msg="<b>$KB_SYNC</b>: sync | <b>$KB_URLSEARCH</b>: urls | <b>$KB_NAMESEARCH</b>: names | <b>$KB_FOLDERSELECT</b>: folders | <b>$KB_TOTPCOPY</b>: totp | <b>$KB_LOCK</b>: lock"
 
-  [[ ! -z "$AUTOTYPE_MODE" ]] && {
+  [[ ! "$AUTOTYPE_MODE" = "UNSET" ]] && {
     actions+=(
       -kb-custom-5 $KB_TYPEALL
       -kb-custom-6 $KB_TYPEUSER
@@ -353,7 +353,7 @@ auto_type() {
 
 # Set $AUTOTYPE_MODE to a command that will emulate keyboard input
 select_autotype_command() {
-  if [[ -z "$AUTOTYPE_MODE" ]]; then
+  if [[ "$AUTOTYPE_MODE" = "UNSET" ]]; then
     if [ "$XDG_SESSION_TYPE" = "wayland" ] && hash ydotool 2>/dev/null; then
       AUTOTYPE_MODE=(sudo ydotool)
     elif [ "$XDG_SESSION_TYPE" != "wayland" ] && hash xdotool 2>/dev/null; then

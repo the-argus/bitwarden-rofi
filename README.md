@@ -153,7 +153,7 @@ keyutils.
 **Optionally** install these requirements:
 
 - xclip, xsel, or wl-clipboard
-- xdotool or ydotool
+- xdotool or ydotool (for autotype)
 
 Then:
 
