@@ -54,6 +54,9 @@ DEDUP_MARK="(+)"
 
 # Source helper functions
 DIR="$(dirname "$(readlink -f "$0")")"
+if [ ! -f $DIR/lib-bwmenu ]; then
+  DIR=~/.config/bwmenu
+fi
 source "$DIR/lib-bwmenu"
 
 THEMES_DIRECTORY=$HOME/.config/bwmenu/themes

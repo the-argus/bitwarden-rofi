@@ -154,3 +154,13 @@ keyutils.
 
 - xclip, xsel, or wl-clipboard
 - xdotool or ydotool
+
+Then:
+
+```bash
+git clone https://github.com/the-argus/bitwarden-rofi
+mkdir -p ~/.config
+mv bitwarden-rofi ~/.config/bwmenu
+
+sudo ln -s ~/.config/bwmenu/bwmenu /bin/bwmenu
+```

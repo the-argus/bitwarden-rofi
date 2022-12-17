@@ -37,10 +37,12 @@ in
       cp -r icon $out/share/bwmenu/themes/icon
       
       substitute default_themes/common.rasi $out/share/bwmenu/themes/common.rasi \
-        --replace "icon {background-image: url(\"icon/bitwarden.png\", height);}" "icon {background-image: url(\"$out/share/bwmenu/themes/icon/bitwarden.png\", height);}"
+        --replace "icon {background-image: url(\"~/.config/bwmenu/icon/bitwarden.png\", height);}" \
+        "icon {background-image: url(\"$out/share/bwmenu/themes/icon/bitwarden.png\", height);}"
 
       substitute default_themes/main_theme.rasi $out/share/bwmenu/themes/main_theme.rasi \
-        --replace "icon {background-image: url(\"icon/bitwarden-border.png\", height);}" "icon {background-image: url(\"$out/share/bwmenu/themes/icon/bitwarden-border.png\", height);}"
+        --replace "icon {background-image: url(\"~/.config/bwmenu/icon/bitwarden-border.png\", height);}" \
+        "icon {background-image: url(\"$out/share/bwmenu/themes/icon/bitwarden-border.png\", height);}"
 
       wrapProgram "$out/bin/bwmenu" \
           --prefix PATH : ${runtimePath}

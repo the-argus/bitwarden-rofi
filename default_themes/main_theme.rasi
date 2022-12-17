@@ -4,7 +4,7 @@ configuration {
     font:						    "monospace 16";
 }
 
-icon {background-image: url("icon/bitwarden-border.png", height);}
+icon {background-image: url("~/.config/bwmenu/icon/bitwarden-border.png", height);}
 /* icon { */
 /*     border-radius:                  6px; */
 /*     border:                         2px; */

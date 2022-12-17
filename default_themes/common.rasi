@@ -30,7 +30,7 @@ mainbox {
     padding:                        8px;
 }
 
-icon {background-image: url("icon/bitwarden.png", height);}
+icon {background-image: url("~/.config/bwmenu/icon/bitwarden.png", height);}
 icon {
     padding: 10px;
     expand: false;
