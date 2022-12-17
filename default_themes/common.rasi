@@ -30,10 +30,10 @@ mainbox {
     padding:                        8px;
 }
 
+icon {background-image: url("icon/bitwarden.png", height);}
 icon {
-    padding: 6px;
+    padding: 10px;
     expand: false;
-    background-image: url("icon/bitwarden.png", height);
     background-color: @tertiary-color-2;
 }
 
