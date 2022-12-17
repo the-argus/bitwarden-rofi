@@ -27,14 +27,14 @@ in
     dontBuild = true;
     installPhase = ''
       mkdir -p $out/bin
-      mkdir -p $out/lib
       mkdir -p $out/share/bwmenu
       substitute bwmenu $out/bin/bwmenu \
-        --replace "source \"\$DIR/lib-bwmenu\"" "source \"$out/lib/lib-bwmenu\"" \
+        --replace "source \"\$DIR/lib-bwmenu\"" "source \"$out/share/bwmenu/lib\"" \
         --replace "THEMES_DIRECTORY=\$DIR/default_themes" "THEMES_DIRECTORY=$out/share/bwmenu/themes"
       ${coreutils-full}/bin/chmod +x $out/bin/bwmenu
-      cp lib-bwmenu $out/lib
+      cp lib-bwmenu $out/share/bwmenu/lib
       cp -r default_themes $out/share/bwmenu/themes
+      cp -r icon $out/share/bwmenu/themes/icon
 
       wrapProgram "$out/bin/bwmenu" \
           --prefix PATH : ${runtimePath}
