@@ -11,8 +11,8 @@ Rofi is _not_ meant for secure password handling. The password
 entered into rofi in plaintext and exists in memory in that format in the stack
 until it is piped into the bitwarden cli. Use at your own risk.
 
-![bitwarden-rofi](./img/password-selection.png)
-![bitwarden-rofi master password selection](./img/master-password.png)
+![bitwarden-rofi](./img/password-selection.jpg)
+![bitwarden-rofi master password selection](./img/master-password.jpg)
 
 ## Usage
 
