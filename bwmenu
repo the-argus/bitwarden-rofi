@@ -10,8 +10,9 @@ CLEAR=$DEFAULT_CLEAR # Clear password after N seconds (0 to disable)
 SHOW_PASSWORD=no # Show part of the password in the notification
 AUTO_LOCK=900 # 15 minutes, default for bitwarden apps
 # time before bwmenu will verify that session is unlocked, causing slower
-# launch times as a result.
-HOT_LOOKUP_TIME=60 
+# launch times as a result. (being the same as or greater than AUTO_LOCK means
+# it is disabled.
+HOT_LOOKUP_TIME=900 
 
 # Holds the available items in memory
 ITEMS=
