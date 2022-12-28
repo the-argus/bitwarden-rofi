@@ -26,7 +26,6 @@ mainbox {
     /* border-radius:               0.375rem; */
     /* rem doesnt work so assuming one REM is 16px: */
     /* this matches bitwarden.com buttons */
-    border-radius:                  6px;
     padding:                        8px;
 }
 
