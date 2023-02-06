@@ -10,6 +10,7 @@
   buildPackages,
   lib,
   xdotool,
+  autoLock ? 900,
   ...
 }: let
   deps = [
@@ -24,7 +25,7 @@
   runtimePath = lib.strings.makeBinPath deps;
 in
   stdenv.mkDerivation rec {
-    name = "bw-rofi";
+    name = "bwmenu";
     src = ./.;
     dontBuild = true;
     installPhase = ''
@@ -33,6 +34,7 @@ in
       substitute bwmenu $out/bin/bwmenu \
         --replace "source \"\$DIR/lib-bwmenu\"" "source \"$out/share/bwmenu/lib\"" \
         --replace "THEMES_DIRECTORY=\$DIR/default_themes" "THEMES_DIRECTORY=$out/share/bwmenu/themes" \
+        --replace "AUTO_LOCK=900" "AUTO_LOCK=${builtins.toString autoLock}" \
         --replace "AUTOTYPE_MODE=\"UNSET\"" "AUTOTYPE_MODE=\"xdotool\""
       ${coreutils-full}/bin/chmod +x $out/bin/bwmenu
       cp lib-bwmenu $out/share/bwmenu/lib
