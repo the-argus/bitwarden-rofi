@@ -1,15 +1,20 @@
 # Bitwarden Rofi Menu
 
-This is a work in progress to get the BitWarden cli functionality in an easy
-Rofi menu. On selecting an entry, the password is copied to your clipboard for
+This is a lightweight GUI frontend for bitwarden. It is a popup menu that can be
+bound to a key. On first open, it will ask for your password, and then store the
+result in the linux kernel's keyring. After that, you will see a list of your
+logins. On selecting an entry, the password is copied to your clipboard for
 5 seconds. During those 5 seconds, a notification is shown indicating which
 password you are copying at that time.
 
+You can also set up [autotype](#auto-typing) to avoid copying to your clipboard
+altogether.
+
 ## WARNING
 
-Rofi is _not_ meant for secure password handling. The password
-entered into rofi in plaintext and exists in memory in that format in the stack
-until it is piped into the bitwarden cli. Use at your own risk.
+Rofi is _not_ meant for secure password handling. I use it on a day-to-day basis
+but I do not understand the details of what makes a GUI program safe for
+handling passwords. I cannot offer any guarantees. Use at your own risk.
 
 ![bitwarden-rofi](./img/password-selection.jpg)
 ![bitwarden-rofi master password selection](./img/master-password.jpg)
