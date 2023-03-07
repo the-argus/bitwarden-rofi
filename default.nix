@@ -11,17 +11,25 @@
   lib,
   xdotool,
   autoLock ? 900,
+  waylandSupport ? false,
+  ydotool,
+  wl-clipboard,
   ...
 }: let
-  deps = [
-    jq
-    bitwarden-cli
-    git-rofi
-    xclip
-    keyutils
-    gnupg
-    xdotool
-  ];
+  deps =
+    [
+      jq
+      bitwarden-cli
+      git-rofi
+      xclip
+      keyutils
+      gnupg
+      xdotool
+    ]
+    ++ (lib.lists.optionals waylandSupport [
+      ydotool
+      wl-clipboard
+    ]);
   runtimePath = lib.strings.makeBinPath deps;
 in
   stdenv.mkDerivation rec {
