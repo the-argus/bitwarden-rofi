@@ -141,7 +141,7 @@ load_cache() {
 # source the hash file to gain access to the BitWarden CLI
 # Pre fetch all the items
 load_items() {
-  if ! ITEMS=$(bw --nointeraction list items --session "$BW_HASH" 2>/dev/null); then
+  if ! ITEMS=$(bw --nointeraction list items --session "$BW_HASH"); then
     keyctl purge user bw_session &>/dev/null
     exit_error $? "Could not load items: $ITEMS"
   fi
