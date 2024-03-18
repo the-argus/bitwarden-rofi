@@ -3,7 +3,6 @@
 NAME="$(basename "$0")"
 VERSION="0.4"
 DEFAULT_CLEAR=5
-BW_HASH=
 
 # Options
 CLEAR=$DEFAULT_CLEAR # Clear password after N seconds (0 to disable)
@@ -94,7 +93,7 @@ ask_password() {
 get_session_key_instalock () {
   # also remove it from the keyring if it already existed
   keyctl purge user bw_session &>/dev/null
-  BW_HASH=$(ask_password) || exit $?
+  export BW_SESSION=$(ask_password) || exit $?
 }
 
 # get the session key, store it in the keyring, and set an expiration time
@@ -103,13 +102,13 @@ get_session_key_set_password_locktime () {
   # ask for the password and add the resulting session hash to the keyring
   key_id=
   function ask_password_add_to_keyring () {
-    BW_HASH=$(ask_password) || exit $?
-    key_id=$(echo "$BW_HASH" | keyctl padd user bw_session @u)
+    export BW_SESSION=$(ask_password) || exit $?
+    key_id=$(echo "$BW_SESSION" | keyctl padd user bw_session @u)
   }
 
   # if we can get a session from the keyring, then use it
   if key_id=$(keyctl request user bw_session 2>/dev/null); then
-    BW_HASH=$(keyctl pipe "$key_id")
+    export BW_SESSION=$(keyctl pipe "$key_id")
   else
     ask_password_add_to_keyring
   fi
@@ -132,7 +131,7 @@ get_session_key() {
 # Load encrypted passwords from cache if exists
 load_cache() {
   if [ -f "$CACHE_FILE" ]; then
-    ITEMS=$(gpg --quiet -d --batch --passphrase $BW_HASH --cipher-algo AES256 $CACHE_FILE)
+    ITEMS=$(gpg --quiet -d --batch --cipher-algo AES256 $CACHE_FILE)
   else
     load_items
   fi
@@ -141,14 +140,14 @@ load_cache() {
 # source the hash file to gain access to the BitWarden CLI
 # Pre fetch all the items
 load_items() {
-  if ! ITEMS=$(bw --nointeraction list items --session "$BW_HASH"); then
+  if ! ITEMS=$(bw --nointeraction list items 2>/dev/null); then
     keyctl purge user bw_session &>/dev/null
     exit_error $? "Could not load items: $ITEMS"
   fi
 
   # create dir for cache and encrypt $ITEMS
   mkdir -p $(dirname $CACHE_FILE)
-  echo "$ITEMS" | gpg -c --batch --passphrase $BW_HASH --cipher-algo AES256 -o $CACHE_FILE
+  echo "$ITEMS" | gpg -c --batch --passphrase $BW_SESSION --cipher-algo AES256 -o $CACHE_FILE
 }
 
 exit_error() {
@@ -235,34 +234,34 @@ show_urls() {
     | jq -r '.[] | select(has("login")) | .login | select(has("uris")).uris | .[].uri' \
     | rofi_menu
   ); then
-    item_array="$(bw list items --url "$url" --session "$BW_HASH")"
+    item_array="$(bw list items --url "$url")"
     "${ENTER_CMD[@]}" "$item_array"
   else
     rofi_exit_code="$?"
-    item_array="$(bw list items --url "$url" --session "$BW_HASH")"
+    item_array="$(bw list items --url "$url")"
     on_rofi_exit "$rofi_exit_code" "$item_array"
   fi
 }
 
 show_folders() {
-  folders=$(bw list folders --session "$BW_HASH")
+  folders=$(bw list folders)
   if folder=$(echo "$folders" | jq -r '.[] | .name' | rofi_menu); then
 
     folder_id=$(echo "$folders" | jq -r ".[] | select(.name == \"$folder\").id")
 
-    ITEMS=$(bw list items --folderid "$folder_id" --session "$BW_HASH")
+    ITEMS=$(bw list items --folderid "$folder_id")
     show_items
   else
     rofi_exit_code="$?"
     folder_id=$(echo "$folders" | jq -r ".[] | select(.name == \"$folder\").id")
-    item_array=$(bw list items --folderid "$folder_id" --session "$BW_HASH")
+    item_array=$(bw list items --folderid "$folder_id")
     on_rofi_exit "$rofi_exit_code" "$item_array"
   fi
 }
 
 # re-sync the BitWarden items with the server
 sync_bitwarden() {
-  if ! error="$(bw --nointeraction sync --session "$BW_HASH" 2>/dev/null)"; then
+  if ! error="$(bw --nointeraction sync 2>/dev/null)"; then
     exit_error 1 "Failed to sync bitwarden: $error"
   fi
 
@@ -430,7 +429,7 @@ copy_totp() {
   else
     id=$(echo "$1" | jq -r ".[0].id")
 
-    if ! totp=$(bw --session "$BW_HASH" get totp "$id"); then
+    if ! totp=$(bw get totp "$id"); then
       exit_error 1 "$totp"
     fi
 
