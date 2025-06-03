@@ -131,7 +131,7 @@ get_session_key() {
 # Load encrypted passwords from cache if exists
 load_cache() {
   if [ -f "$CACHE_FILE" ]; then
-    ITEMS=$(gpg --quiet -d --batch --cipher-algo AES256 $CACHE_FILE)
+    ITEMS=$(gpg --batch --pinentry-mode loopback --passphrase $BW_SESSION --decrypt --cipher-algo AES256 $CACHE_FILE)
   else
     load_items
   fi
@@ -147,7 +147,7 @@ load_items() {
 
   # create dir for cache and encrypt $ITEMS
   mkdir -p $(dirname $CACHE_FILE)
-  echo "$ITEMS" | gpg -c --batch --passphrase $BW_SESSION --cipher-algo AES256 -o $CACHE_FILE
+  echo "$ITEMS" | gpg -c --pinentry-mode loopback --batch --passphrase $BW_SESSION --cipher-algo AES256 -o $CACHE_FILE
 }
 
 exit_error() {
