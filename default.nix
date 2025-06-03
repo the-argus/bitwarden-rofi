@@ -5,6 +5,7 @@
   bitwarden-cli,
   git-rofi,
   xclip,
+  gvfs,
   gnupg,
   coreutils-full,
   buildPackages,
