@@ -2,7 +2,7 @@
   description = "bitwarden rofi client";
 
   inputs = {
-    nixpkgs.url = github:nixos/nixpkgs?ref=nixos-24.11;
+    nixpkgs.url = github:nixos/nixpkgs?ref=nixos-25.11;
   };
 
   outputs = {
@@ -23,9 +23,9 @@
         src = pkgs.${system}.fetchFromGitHub {
           owner = "davatorium";
           repo = "rofi";
-          rev = "23de9e9d2c35af8cce72b060f6d2916cd6215a23";
+          rev = "f428ba51768bebc0388a17e77344b7daaee88d38";
           fetchSubmodules = true;
-          sha256 = "sha256-pVZPMymXHOh3kmkiigkRRLmYaGk0o706P8PYja/+zMo=";
+          sha256 = "sha256-9d87eha0Gw0+iVyx8JhvVIhgIqI6Iap6iA5+EfT0mX4=";
         };
       });
       default = bwmenu;
